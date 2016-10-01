@@ -6,10 +6,10 @@ Frontend React Native server for Starvy app
 
 ### To run locally
 
+1. install node modules
 1. Start the react native server
 1. Build
 1. Bundle the android
-1. Start the react native server
 ```
 $ react-native start
 $ npm install
