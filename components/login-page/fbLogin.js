@@ -1,6 +1,8 @@
 'use strict';
 
-import React from 'react';
+import React, { Component } from 'react';
+import { StyleSheet,Text,View } from 'react-native';
+var Icon = require('react-native-vector-icons/FontAwesome');
 import {FBLogin, FBLoginManager} from 'react-native-facebook-login';
 
 /**
@@ -24,9 +26,9 @@ class CustomFBLogin extends React.Component {
         <FBLogin
             buttonView={<FBLoginView />}
             ref={(fbLogin) => { this.fbLogin = fbLogin }}
-            loginBehavior={FBLoginManager.LoginBehaviors.Native}
+            loginBehavior={FBLoginManager.LoginBehaviors.WebView}
             permissions={["email","user_friends"]}
-            onLogin={responseFacebook}
+            onLogin={this.responseFacebook}
             onLoginFound={function(e){console.log(e)}}
             onLoginNotFound={function(e){console.log(e)}}
             onLogout={function(e){console.log(e)}}
@@ -35,6 +37,38 @@ class CustomFBLogin extends React.Component {
           />
     )
   }
+}
+
+class FBLoginView extends Component {
+  static contextTypes = {
+    isLoggedIn: React.PropTypes.bool,
+    login: React.PropTypes.func,
+    logout: React.PropTypes.func,
+    props: React.PropTypes.object
+    };
+
+  constructor(props) {
+      super(props);
+    }
+
+    render(){
+        return (
+          <View style={[]}>
+            <Icon.Button onPress={() => {
+                if(!this.context.isLoggedIn){
+                  this.context.login()
+                }else{
+                  this.context.logout()
+                }
+
+              }}
+              color={"#000000"}
+              backgroundColor={"#ffffff"} name={"facebook"}  size={20} borderRadius={100} >
+
+            </Icon.Button>
+          </View>
+      )
+    }
 }
 
 export default CustomFBLogin;

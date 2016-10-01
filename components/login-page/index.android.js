@@ -6,7 +6,7 @@
 
 import React, { Component } from 'react';
 import Button from 'react-native-button';
-import CustomFBLogin from 'fbLogin'
+import CustomFBLogin from './fbLogin'
 import {
     AppRegistry,
     StyleSheet,
