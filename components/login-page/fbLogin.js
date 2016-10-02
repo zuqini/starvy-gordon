@@ -24,7 +24,6 @@ class CustomFBLogin extends React.Component {
   render() {
     return (
         <FBLogin
-            //buttonView={<FBLoginView />}
             ref={(fbLogin) => { this.fbLogin = fbLogin }}
             loginBehavior={FBLoginManager.LoginBehaviors.Native}
             permissions={["email","public_profile"]}
