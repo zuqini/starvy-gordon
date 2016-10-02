@@ -12,12 +12,12 @@ import {
   View
 } from 'react-native';
 
-import LoginPage from './components/login-page';
+import PersonalPage from './components/personal-page';
 
 class StarvyGordon extends Component {
   render() {
     return (
-      <LoginPage />
+      <PersonalPage />
     );
   }
 }
