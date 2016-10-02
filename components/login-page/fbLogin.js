@@ -26,20 +26,20 @@ class CustomFBLogin extends React.Component {
   responseFacebook = (response) => {
     console.log(response);
     this.props.navigator.replace({
-        id: "FriendsList"
+        id: "PersonalPage"
     });
   };
 
   render() {
+    var _this = this;
     return (
         <FBLogin
             ref={(fbLogin) => { this.fbLogin = fbLogin }}
             loginBehavior={FBLoginManager.LoginBehaviors.Native}
             permissions={["email","public_profile", "user_friends"]}
             onLogin={this.responseFacebook}
-            onLoginFound={(e)=>{this.props.navigator.replace({id: "FriendsList"})}}
             onError={function(e){console.log(e)}}
-            onLoginFound={function(e){console.log(e)}}
+            onLoginFound={function(e){_this.props.navigator.replace({id: "PersonalPage"})}}
             onLoginNotFound={function(e){console.log(e)}}
             onLogout={function(e){console.log(e)}}
             onCancel={function(e){console.log(e)}}

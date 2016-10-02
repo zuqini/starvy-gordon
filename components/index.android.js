@@ -6,7 +6,7 @@
 
 import React, { Component } from 'react';
 import Button from 'react-native-button';
-import CustomFBLogin from './fbLogin'
+import CustomFBLogin from './login-page/fbLogin'
 import {
     AppRegistry,
     StyleSheet,
@@ -14,7 +14,8 @@ import {
     View,
     Navigator
 } from 'react-native';
-import FriendsList from '../friends-page/friendsList';
+import FriendsList from './friends-page/friendsList';
+import PersonalPage from './personal-page/index.android'
 
 class LoginPage extends Component {
     constructor(props) {
@@ -86,6 +87,8 @@ class RouteHandler extends Component {
             return <FriendsList navigator={nav}/>
           case "LoginPage":
             return <LoginPage navigator={nav}/>
+          case "PersonalPage":
+            return <PersonalPage navigator={nav}/>
        }
    };
 }
