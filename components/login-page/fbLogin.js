@@ -1,7 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { StyleSheet,Text,View } from 'react-native';
+import { StyleSheet,Text,View,Navigator } from 'react-native';
 import {FBLogin, FBLoginManager} from 'react-native-facebook-login';
 
 /**
@@ -16,8 +16,18 @@ class CustomFBLogin extends React.Component {
       super(props);
   };
 
+  componentWillReceiveProps(nextProps) {
+      console.log(nextProps);
+      this.setState({
+          navigator: nextProps.navigator
+      });
+  };
+
   responseFacebook = (response) => {
     console.log(response);
+    this.props.navigator.replace({
+        id: "FriendsList"
+    });
   };
 
   render() {
@@ -27,6 +37,7 @@ class CustomFBLogin extends React.Component {
             loginBehavior={FBLoginManager.LoginBehaviors.Native}
             permissions={["email","public_profile", "user_friends"]}
             onLogin={this.responseFacebook}
+            onLoginFound={(e)=>{this.props.navigator.replace({id: "FriendsList"})}}
             onError={function(e){console.log(e)}}
             onLoginFound={function(e){console.log(e)}}
             onLoginNotFound={function(e){console.log(e)}}
@@ -38,36 +49,36 @@ class CustomFBLogin extends React.Component {
   }
 }
 
-class FBLoginView extends Component {
-  static contextTypes = {
-    isLoggedIn: React.PropTypes.bool,
-    login: React.PropTypes.func,
-    logout: React.PropTypes.func,
-    props: React.PropTypes.object
-    };
-
-  constructor(props) {
-      super(props);
-    }
-
-    render(){
-        return (
-          <View style={[]}>
-            <Icon.Button onPress={() => {
-                if(!this.context.isLoggedIn){
-                  this.context.login()
-                }else{
-                  this.context.logout()
-                }
-
-              }}
-              color={"#000000"}
-              backgroundColor={"#ffffff"} name={"facebook"}  size={20} borderRadius={100} >
-
-            </Icon.Button>
-          </View>
-      )
-    }
-}
+// class FBLoginView extends Component {
+//   static contextTypes = {
+//         isLoggedIn: React.PropTypes.bool,
+//         login: React.PropTypes.func,
+//         logout: React.PropTypes.func,
+//         props: React.PropTypes.object
+//     };
+//
+//   constructor(props) {
+//       super(props);
+//     }
+//
+//     render(){
+//         return (
+//           <View style={[]}>
+//             <Icon.Button onPress={() => {
+//                 if(!this.context.isLoggedIn){
+//                   this.context.login()
+//                 }else{
+//                   this.context.logout()
+//                 }
+//
+//               }}
+//               color={"#000000"}
+//               backgroundColor={"#ffffff"} name={"facebook"}  size={20} borderRadius={100} >
+//
+//             </Icon.Button>
+//           </View>
+//       )
+//     }
+// }
 
 export default CustomFBLogin;
