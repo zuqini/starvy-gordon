@@ -13,11 +13,12 @@ import {
 } from 'react-native';
 
 import PersonalPage from './components/personal-page';
+import RouteHandler from './components/index.android'
 
 class StarvyGordon extends Component {
   render() {
     return (
-      <PersonalPage />
+      <RouteHandler />
     );
   }
 }

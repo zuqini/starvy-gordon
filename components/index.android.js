@@ -6,15 +6,21 @@
 
 import React, { Component } from 'react';
 import Button from 'react-native-button';
-import CustomFBLogin from './fbLogin'
+import CustomFBLogin from './login-page/fbLogin'
 import {
     AppRegistry,
     StyleSheet,
     Text,
-    View
+    View,
+    Navigator
 } from 'react-native';
+import FriendsList from './friends-page/friendsList';
+import PersonalPage from './personal-page/index.android'
 
 class LoginPage extends Component {
+    constructor(props) {
+        super(props);
+    };
     render() {
         return (
             <View style={styles.container}>
@@ -25,7 +31,7 @@ class LoginPage extends Component {
                     <Text style={styles.slogan}>
                         Munch and chomp away together!
                     </Text>
-                    <CustomFBLogin />
+                    <CustomFBLogin navigator={this.props.navigator}/>
                 </View>
             </View>
         );
@@ -64,4 +70,27 @@ const styles = StyleSheet.create({
     },
 });
 
-export default LoginPage;
+class RouteHandler extends Component {
+    render() {
+        return (
+            <Navigator
+                  initialRoute={{ id: "LoginPage" }}
+                  renderScene={(route, nav) =>
+                    {return this.renderScene(route, nav)}}
+            />
+        )
+    };
+
+    renderScene(route,nav) {
+       switch (route.id) {
+          case "FriendsList":
+            return <FriendsList navigator={nav}/>
+          case "LoginPage":
+            return <LoginPage navigator={nav}/>
+          case "PersonalPage":
+            return <PersonalPage navigator={nav}/>
+       }
+   };
+}
+
+export default RouteHandler;
