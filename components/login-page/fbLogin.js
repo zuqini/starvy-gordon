@@ -2,7 +2,6 @@
 
 import React, { Component } from 'react';
 import { StyleSheet,Text,View } from 'react-native';
-var Icon = require('react-native-vector-icons/FontAwesome');
 import {FBLogin, FBLoginManager} from 'react-native-facebook-login';
 
 /**

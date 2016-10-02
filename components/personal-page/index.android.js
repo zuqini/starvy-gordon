@@ -22,6 +22,8 @@ import {
     MKIconToggle,
 } from 'react-native-material-kit';
 import RestaurantItem from '../restaurant-item';
+import Api from '../../api/api';
+
 import foodImg from '../../img/food.jpg';
 import plusWhite from '../../img/plus_white.png';
 
@@ -33,7 +35,43 @@ const ColoredFab = MKButton.coloredFab()
     }   )
     .build();
 
-class PersonalPage extends Component {
+class PersonalPage extends React.Component {
+    constructor(props) {
+        super(props);
+        this.items = [];
+        this.state = {
+            //defaults
+            latitude: 43.4722893,
+            longitude: -80.5470463,
+            apiData: {},
+        };
+    }
+
+    componentWillUpdate(nextProps, nextState) {
+        if(nextState.apiData && nextState.apiData.businesses) {
+            this.items = nextState.apiData.businesses.map((business) => {
+                return (
+                    <RestaurantItem name={business.name} />
+                );
+            });
+        }
+    }
+
+    componentDidMount() {
+        Api.getRestaurants(this.state.latitude, this.state.longitude).then((apiData) => {this.setState({apiData});});
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                this.setState({
+                    latitude: position.coords.latitude,
+                    longitude: position.coords.longitude,
+                });
+                Api.getRestaurants(position.coords.latitude, position.coords.longitude).then((apiData) => {this.setState({apiData});});
+            },
+            (error) => {},
+            {enableHighAccuracy: false, timeout: 20000, maximumAge: 1000}
+        );
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -45,20 +83,11 @@ class PersonalPage extends Component {
                             color: '#ffffff',
                             fontWeight: 'bold',
                             fontSize: 30}}>
-                        My Restaurants
+                        Nearby Restaurants
                     </Text>
                 </View>
                 <ScrollView style={styles.scrollView}>
-                    {/*mock data*/}
-                    <RestaurantItem name='Panino' />
-                    <RestaurantItem name='Burger King' />
-                    <RestaurantItem name='Mickeys' />
-                    <RestaurantItem name="Aunties' Kitchen" />
-                    <RestaurantItem name='Fruitie Foodie' />
-                    <RestaurantItem name='Sugar Marmalade' />
-                    <RestaurantItem name='WeMesh' />
-                    <RestaurantItem name='Giliam Meeussen Eatery' />
-                    <RestaurantItem name='Zuqini Cutecumber' />
+                    {this.items}
                 </ScrollView>
                 <ColoredFab>
                     <Image pointerEvents="none" source={plusWhite} />
