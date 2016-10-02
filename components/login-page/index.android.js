@@ -6,6 +6,7 @@
 
 import React, { Component } from 'react';
 import Button from 'react-native-button';
+import CustomFBLogin from './fbLogin'
 import {
     AppRegistry,
     StyleSheet,
@@ -24,10 +25,7 @@ class LoginPage extends Component {
                     <Text style={styles.slogan}>
                         Munch and chomp away together!
                     </Text>
-                    <Button style={styles.facebookBtnInner}
-                        containerStyle={styles.facebookBtnContainer}>
-                        CONTINUE VIA FACEBOOK
-                    </Button>
+                    <CustomFBLogin />
                 </View>
             </View>
         );
