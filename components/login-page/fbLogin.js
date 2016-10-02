@@ -18,7 +18,7 @@ class CustomFBLogin extends React.Component {
   };
 
   responseFacebook = (response) => {
-    console.log("Name: " + response.profile.first_name + ", email: " + response.profile.email);
+    console.log(response);
   };
 
   render() {
@@ -26,7 +26,7 @@ class CustomFBLogin extends React.Component {
         <FBLogin
             ref={(fbLogin) => { this.fbLogin = fbLogin }}
             loginBehavior={FBLoginManager.LoginBehaviors.Native}
-            permissions={["email","public_profile"]}
+            permissions={["email","public_profile", "user_friends"]}
             onLogin={this.responseFacebook}
             onError={function(e){console.log(e)}}
             onLoginFound={function(e){console.log(e)}}
